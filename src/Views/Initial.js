@@ -27,7 +27,7 @@ export default class Initial extends Component {
                     <div className="initialHead">
                         <img src={Logo} width="60%" alt="IPL Brain Logo" /><br />
                         iplbox
-             </div>
+                    </div>
                     <div>
                         <Progress repeat={false} callback={() => { this.setState({ RedirectMe: true }) }} data={data} />
                         {this.state.RedirectMe ? <Redirect to="/dashboard" /> : ""}

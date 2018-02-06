@@ -50,26 +50,27 @@ export default class Dashboard extends Component {
 
     render() {
         let { state } = this;
-        return (<div className="dashboardAnimate">
-            <Grid container spacing={24}>
-                <Grid item xs={12}>
-                    <div className="mainHead">
-                        <img src={Logo} width="100px" alt="IPL Brain Logo" /><br />
-                        iplbox
-        </div>
+        return (
+            <div className="dashboardAnimate">
+                <Grid container spacing={24}>
+                    <Grid item xs={12}>
+                        <div className="mainHead">
+                            <img src={Logo} width="100px" alt="IPL Brain Logo" /><br />
+                            iplbox
+                    </div>
+                    </Grid>
+                    <Grid item xs>
+                    </Grid>
+                    <Grid item xs={10} md={5} lg={4} xl={4} sm={5}>
+                        {state.logsList.length === 0 ? <Progress repeat={true} callback={() => { }} data={messageDataConnecting} /> : ""}
+                        {state.logsList.map((singleQuery, i) => (
+                            <SpeechSection key={i} data={singleQuery} />
+                        ))}
+                    </Grid>
+                    <Grid item xs>
+                    </Grid>
                 </Grid>
-                <Grid item xs>
-                </Grid>
-                <Grid item xs={10} md={5} lg={4} xl={4} sm={5}>
-                    {state.logsList.length === 0 ? <Progress repeat={true} callback={() => { }} data={messageDataConnecting} /> : ""}
-                    {state.logsList.map((singleQuery, i) => (
-                        <SpeechSection key={i} data={singleQuery} />
-                    ))}
-                </Grid>
-                <Grid item xs>
-                </Grid>
-            </Grid>
-        </div>
+            </div>
         );
     }
 
