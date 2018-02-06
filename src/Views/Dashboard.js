@@ -3,44 +3,12 @@ import { SpeechSection } from "./../Components";
 import { Grid } from "material-ui";
 import { Progress } from "../Components";
 import Logo from "./../Resources/logo.svg";
-import openSocket from 'socket.io-client';
-
-
-let data = [
-    {
-        queryTime: "20:40:36",
-        queryData: "Alexa search for artist of a 'hello' from musicbrain",
-        responceTime: "20:40:46",
-        responceData: "It is directed by 'rahul'",
-        responceErr: false,
-        totalResponceTime: "10ms"
-
-    }, {
-        queryTime: "20:40:36",
-        queryData: "Alexa search for artist of a 'hello' from ",
-        responceTime: "20:40:46",
-        responceData: "Error:Slot is missing from the utterance",
-        responceErr: true,
-
-        totalResponceTime: "10ms"
-    }, {
-        queryTime: "20:40:36",
-        queryData: "Alexa search for artist of a 'hello' from ",
-        responceTime: "20:40:46",
-        responceData: "Error:Slot is missing from the utterance",
-        responceErr: true,
-
-        totalResponceTime: "10ms"
-    }
-];
+import isEmpty from "lodash/isEmpty";
 
 let messageDataConnecting = [
     { message: "connecting to alexa" },
     { message: "turn on alexa and get ready" },
-    { message: "let's talk alexa about ipl matches" }
-];
-
-let messageDataConnected = [
+    { message: "let's talk alexa about ipl matches" },
     { message: "we are ready" },
     { message: "start asking questions" }
 ];
@@ -49,38 +17,39 @@ export default class Dashboard extends Component {
 
     constructor(props) {
         super(props);
-        const socket = openSocket('https://bot.camouflage81.hasura-app.io/');
-        socket.on('connect', text => {
-            this.setState({ message: messageDataConnected });
-            console.log("Connected");
-            // this.updateUI({
-            //     timestamp: "20:40:36",
-            //     query_text: "Alexa search for artist of a 'hello' from ",
-            //     response_text: "20:40:46",
-            //     response_text: "Error:Slot is missing from the utterance",
-            //     is_error_occured: true,
-            //     response_time: "10ms"
-            // });
-        });
-        socket.on('intentRequest', this.updateUI);
-        this.messageData = [];
-        this.state = { data: this.messageData, message: messageDataConnecting };
+
+        this.getData();
+        this.state = { logsList: [] };
+        this.LogData = [];
     }
 
-    updateUI(responce) {
-        let mapData = {
-            queryTime: responce.timestamp,
-            queryData: responce.query_text,
-            responceTime: responce.timestamp,
-            responceData: responce.response_text,
-            responceErr: responce.is_error_occured,
-            totalResponceTime: responce.response_time
-        }
-        console.log(mapData);
-        // this.messageData.unshift(mapData);
-        this.setState({ data: this.messageData });
+    getData = () => {
+        setTimeout(() => {
+            fetch("https://bot.defect94.hasura-app.io/logs")
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                    throw new Error('Network response was not ok.');
+                })
+                .then((response) => {
+                    if (!isEmpty(this.LogData)) {
+                        if (response.timestamp !== this.LogData[0].timestamp && !isEmpty(response.timestamp))
+                            this.LogData.unshift(response);
+                    } else {
+                        this.LogData.unshift(response);
+                    }
+
+                    this.setState({ logsList: this.LogData });
+                    this.getData();
+                }).catch((err) => {
+                    this.getData();
+                });
+        }, 1000);
     }
+
     render() {
+        let { state } = this;
         return (<div className="dashboardAnimate">
             <Grid container spacing={24}>
                 <Grid item xs={12}>
@@ -92,8 +61,8 @@ export default class Dashboard extends Component {
                 <Grid item xs>
                 </Grid>
                 <Grid item xs={10} md={5} lg={4} xl={4} sm={5}>
-                    {this.state.data.length === 0 ? <Progress repeat={true} callback={() => { }} data={this.state.message} /> : ""}
-                    {this.state.data.map((singleQuery, i) => (
+                    {state.logsList.length === 0 ? <Progress repeat={true} callback={() => { }} data={messageDataConnecting} /> : ""}
+                    {state.logsList.map((singleQuery, i) => (
                         <SpeechSection key={i} data={singleQuery} />
                     ))}
                 </Grid>

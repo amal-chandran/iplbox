@@ -11,6 +11,7 @@ export default class Progress extends Component {
         }
     }
     componentDidMount() {
+
         this.intervalData = setInterval(() => {
             if (this.props.data.length > this.state.selected) {
                 let selected = this.state.selected + 1;
