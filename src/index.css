@@ -165,3 +165,96 @@ body {
     opacity: 1;
   }
 }
+
+.btn {
+  position: relative;
+  display: block;
+  width: 210px;
+  height: 40px;
+  margin: 30px auto;
+  padding: 0 0 0 55px;
+  font: 700 16px/40px 'Quattrocento Sans', sans-serif;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: #555;
+  border-radius: 2px;
+  background: linear-gradient(to bottom, #fff 0%, #e6e6e6 100%);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+}
+
+.btn span {
+  font-size: 14px;
+  text-transform: none;
+  color: #aaa;
+}
+
+.btn:before {
+  content: 'a';
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  font: 20px/40px 'zocial', sans-serif;
+  text-align: center;
+  text-transform: none;
+  color: #fff;
+  border-radius: 2px 0 0 2px;
+  background: linear-gradient(to bottom, #fa0 0%, #cc8800 100%);
+}
+
+.btn:hover {
+  text-shadow: 0 0 10px #fff;
+}
+
+/* reverse */
+
+.btn.reverse {
+  color: #fff;
+}
+
+.btn.reverse span {
+  color: #eee;
+}
+
+.btn.reverse {
+  background: linear-gradient(to bottom, #fa0 0%, #cc8800 100%);
+}
+
+.btn.reverse:before {
+  color: #555;
+  background: linear-gradient(to bottom, #fff 0%, #e6e6e6 100%);
+}
+
+/* naked */
+
+.btn.naked:before {
+  border-right: 1px solid #aaa;
+  background: none;
+}
+
+.btn.naked:before {
+  color: #e69900;
+}
+
+/* full */
+
+.btn.full {
+  color: #fff;
+  background: linear-gradient(to bottom, #fa0 0%, #cc8800 100%);
+}
+
+.btn.full span {
+  color: #eee;
+}
+
+.btn.full:before {
+  border-right: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+:before, :after {
+  content: '';
+  display: block;
+  position: absolute;
+  box-sizing: border-box;
+}

@@ -30,7 +30,7 @@ export default class Initial extends Component {
                     </div>
                     <div>
                         <Progress repeat={false} callback={() => { this.setState({ RedirectMe: true }) }} data={data} />
-                        {this.state.RedirectMe ? <Redirect to="/dashboard" /> : ""}
+                        {this.state.RedirectMe ? <Redirect to="/login" /> : ""}
                     </div>
                 </Grid>
                 <Grid item xs>

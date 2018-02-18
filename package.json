@@ -10,6 +10,7 @@
     "react-dom": "^16.2.0",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.0",
+    "react-social-login": "^3.4.2",
     "react-transition-group": "^2.2.1",
     "timeago-react": "^2.0.0"
   },
