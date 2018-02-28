@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { SpeechSection } from "./../Components";
 import { Grid, Menu, MenuItem, Icon } from "material-ui";
 import { Progress } from "../Components";
-import Logo from "./../Resources/logo.svg";
+import Logo from "./../Assets/logo.svg";
 import isEmpty from "lodash/isEmpty";
 import Button from "material-ui/Button/Button";
 // import { } from ;

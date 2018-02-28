@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Grid } from "material-ui";
-import Logo from "./../Resources/logo.svg";
+import Logo from "./../Assets/logo.svg";
 import { Progress } from "../Components";
 import { Redirect } from 'react-router-dom';
 

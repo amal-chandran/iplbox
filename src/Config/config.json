@@ -1,0 +1,7 @@
+{
+    "url": {
+        "login": "https://auth.defect94.hasura-app.io/v1/login",
+        "signup": "https://auth.defect94.hasura-app.io/v1/signup",
+        "logout": "https://auth.defect94.hasura-app.io/v1/user/logout"
+    }
+}
