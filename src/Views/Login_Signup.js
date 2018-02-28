@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { TextField, Grid } from "material-ui";
 import { Auth } from "./../Resource";
-import { authActions } from "./../Actions";
+import { authActions, notifiActions } from "./../Actions";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Link } from "react-router-dom";
+
 
 class Login_Signup extends Component {
     state = {
@@ -63,11 +64,16 @@ class Login_Signup extends Component {
                             <div className="container-login100-form-btn">
                                 {
                                     this.props.page === "login" ?
-                                        <button onClick={this.onLoginHandle} className="login100-form-btn">Login</button>
+                                        <button disabled={this.props.isFetchingItem} onClick={this.onLoginHandle} className="login100-form-btn">Login</button>
                                         :
-                                        <button onClick={this.onSignupHandle} className="login100-form-btn">Sign up</button>
+                                        <button disabled={this.props.isCreating} onClick={this.onSignupHandle} className="login100-form-btn">Sign up</button>
                                 }
                             </div>
+
+                            {/* <button onClick={() => { this.props.actions.addNotifi("Hello", "success"); }}>Add Notification</button>
+                            <button onClick={() => { this.props.actions.addNotifi("Hello Love You", "success"); }}>Add Notification</button>
+                            <Link to="/home">go to home</Link>
+                             */}
                             <ul className="login-more p-t-190">
                                 <li className="m-b-8">
                                     <span className="txt1">Forgot</span>{" "}
@@ -94,17 +100,24 @@ class Login_Signup extends Component {
     };
 };
 const mapStateToProps = (state) => {
-    const { Auth, userAuth } = state;
+    const { auth, userAuth } = state;
     return {
-        page: userAuth.page
+        page: userAuth.page,
+        isFetchingItem: auth.isFetchingItem,
+        isCreating: auth.isCreating
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     const authPageSet = authActions.authPageSet;
+    const addNotifi = notifiActions.addNotifi;
+
     const { loginAuth, signupAuth, logoutAuth, actions } = Auth;
     return {
-        actions: bindActionCreators({ loginAuth, signupAuth, logoutAuth, authPageSet }, dispatch)
+        actions: bindActionCreators({
+            loginAuth, signupAuth,
+            logoutAuth, authPageSet, addNotifi
+        }, dispatch)
     }
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Login_Signup) 

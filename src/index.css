@@ -1,16 +1,23 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
   box-sizing: border-box;
   background: #e6e7e9;
-  padding-top: 12px;
+  height: 100%;
+  font-family: Poppins-Regular, sans-serif;
+}
+
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
 }
 
 .mainHead {
   font-size: 30px;
   text-align: center;
   font-weight: bold;
+  padding-top: 12px;
 }
 
 .sectionHead {
@@ -259,12 +266,6 @@ body {
   box-sizing: border-box;
 }
 
-body {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
-}
-
 /*//////////////////////////////////////////////////////////////////
 [ FONT ]*/
 
@@ -290,17 +291,6 @@ body {
 
 /*//////////////////////////////////////////////////////////////////
 [ RESTYLE TAG ]*/
-
-* {
-  margin: 0px;
-  padding: 0px;
-  box-sizing: border-box;
-}
-
-body, html {
-  height: 100%;
-  font-family: Poppins-Regular, sans-serif;
-}
 
 /*---------------------------------------------*/
 
