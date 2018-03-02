@@ -5,7 +5,9 @@ import { Progress } from "../Components";
 import Logo from "./../Assets/logo.svg";
 import isEmpty from "lodash/isEmpty";
 import Button from "material-ui/Button/Button";
-// import { } from ;
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import { push } from 'react-router-redux';
 
 let messageDataConnecting = [
     { message: "connecting to alexa" },
@@ -15,7 +17,7 @@ let messageDataConnecting = [
     { message: "start asking questions" }
 ];
 
-export default class Dashboard extends Component {
+class Dashboard extends Component {
 
     constructor(props) {
         super(props);
@@ -102,7 +104,10 @@ export default class Dashboard extends Component {
                             >
                                 <MenuItem onClick={this.handleClear}>Clear All</MenuItem>
                                 <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-                                <MenuItem onClick={this.handleClose}>Logout</MenuItem>
+                                <MenuItem onClick={(e) => {
+                                    this.props.actions.push("/");
+                                    this.handleClose(e);
+                                }}>Logout</MenuItem>
                             </Menu>
 
                         </div>
@@ -120,3 +125,13 @@ export default class Dashboard extends Component {
     }
 
 }
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        actions: bindActionCreators({
+            push
+        }, dispatch)
+    }
+};
+
+export default connect(() => { return {}; }, mapDispatchToProps)(Dashboard);
