@@ -10,7 +10,7 @@ export const getHeader = (noAuth = false, ...data) => {
     let authToken = getAuthTocken();
     console.log("Hello" + data);
     let headerData = {
-        credentials: 'include',
+        Credentials: 'include',
         "Content-Type": "application/json"
     };
     console.log(authToken);

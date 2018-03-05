@@ -24,8 +24,13 @@ const customMiddleWare = store => next => action => {
 
             delete urlDataQuery.redirect_uri;
             urlDataQuery = { ...redirectParse.query, ...urlDataQuery }
-            urlDataQuery = queryString.stringify(urlDataQuery);
-
+            let redirectUrlData = {
+                vendorId: urlDataQuery['vendorId'],
+                access_token: urlDataQuery['access_token'],
+                token_type: urlDataQuery['token_type']
+            }
+            urlDataQuery = queryString.stringify(redirectUrlData);
+            console.log(urlDataQuery);
             window.location.href = redirectParse.url + "?" + urlDataQuery;
         } else {
             store.dispatch(authActions.authLogin(action.body));

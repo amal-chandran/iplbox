@@ -25,6 +25,7 @@ class Dashboard extends Component {
         this.getData();
         this.state = { logsList: [] };
         this.LogData = [];
+        this.Unmounted = false;
     }
 
     getData = () => {
@@ -47,9 +48,11 @@ class Dashboard extends Component {
 
                         this.setState({ logsList: this.LogData });
                     }
-                    this.getData();
+                    if (!this.Unmounted)
+                        this.getData();
                 }).catch((err) => {
-                    this.getData();
+                    if (!this.Unmounted)
+                        this.getData();
                 });
         }, 1000);
     }
@@ -70,6 +73,10 @@ class Dashboard extends Component {
         this.setState({ logsList: this.LogData });
         this.handleClose();
     };
+
+    componentWillUnmount() {
+        this.Unmounted = true;
+    }
 
     render() {
         let { state } = this;

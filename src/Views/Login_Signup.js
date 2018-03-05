@@ -99,6 +99,7 @@ class Login_Signup extends Component {
         );
     };
 };
+
 const mapStateToProps = (state) => {
     const { auth, userAuth } = state;
     return {
@@ -120,4 +121,4 @@ const mapDispatchToProps = (dispatch) => {
         }, dispatch)
     }
 };
-export default connect(mapStateToProps, mapDispatchToProps)(Login_Signup) 
+export default connect(mapStateToProps, mapDispatchToProps)(Login_Signup);
