@@ -23,15 +23,16 @@ const customMiddleWare = store => next => action => {
             let redirectParse = queryString.parseUrl(urlDataQuery.redirect_uri);
 
             delete urlDataQuery.redirect_uri;
-            urlDataQuery = { ...redirectParse.query, ...urlDataQuery }
+            const urlDataQueryData = { ...redirectParse.query, ...urlDataQuery }
             let redirectUrlData = {
-                vendorId: urlDataQuery['vendorId'],
-                access_token: urlDataQuery['access_token'],
-                token_type: urlDataQuery['token_type']
+                access_token: urlDataQueryData['access_token'],
+                token_type: urlDataQueryData['token_type'],
+                state: urlDataQueryData['state']
             }
             urlDataQuery = queryString.stringify(redirectUrlData);
-            console.log(urlDataQuery);
-            window.location.href = redirectParse.url + "?" + urlDataQuery;
+            // console.log(urlDataQuery);
+
+            window.location.href = redirectParse.url + "?vendorId=" + urlDataQueryData['vendorId'] + "#" + urlDataQuery;
         } else {
             store.dispatch(authActions.authLogin(action.body));
             store.dispatch(push("/dashboard"));
