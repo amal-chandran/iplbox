@@ -19,7 +19,7 @@ const { actions, rootReducer, types } = createResource({
         logout: {
             method: 'POST',
             url: config.url.logout,
-            headers: () => { console.log("logout header seatting"); return authHelper.getHeader(false) }
+            headers: () => { return authHelper.getHeader(false) }
         }
     }
 });

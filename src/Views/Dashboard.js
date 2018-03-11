@@ -8,6 +8,8 @@ import Button from "material-ui/Button/Button";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { push } from 'react-router-redux';
+import Config from './../Config/config.json';
+import * as authHelper from "./../Helper/authHelper";
 
 let messageDataConnecting = [
     { message: "connecting to alexa" },
@@ -26,11 +28,50 @@ class Dashboard extends Component {
         this.state = { logsList: [] };
         this.LogData = [];
         this.Unmounted = false;
+        const { hasura_id } = this.props.authData;
+
+    }
+
+    getRequestOptions = (body) => {
+        const { hasura_id } = this.props.authData;
+
+        return {
+            "method": "POST",
+            "headers": authHelper.getHeader(false),
+            "body": JSON.stringify(body(hasura_id))
+        };
     }
 
     getData = () => {
         setTimeout(() => {
-            fetch("https://bot.defect94.hasura-app.io/logs")
+            let body = (hasura_id) => ({
+                "type": "select",
+                "args": {
+                    "table": "logs",
+                    "columns": [
+                        "*"
+                    ],
+                    "where": {
+                        "$and": [
+                            {
+                                "hasura_id": {
+                                    "$eq": hasura_id
+                                }
+                            }
+                        ]
+                    },
+                    "order_by": [
+                        {
+                            "column": "timestamp",
+                            "order": "desc"
+                        }
+                    ],
+                    "limit": "5"
+                }
+            });
+
+
+            fetch(Config.url.data, this.getRequestOptions(body))
                 .then(response => {
                     if (response.ok) {
                         return response.json();
@@ -38,15 +79,8 @@ class Dashboard extends Component {
                     throw new Error('Network response was not ok.');
                 })
                 .then((response) => {
-                    if (!isEmpty(response.timestamp)) {
-                        if (!isEmpty(this.LogData)) {
-                            if (response.timestamp !== this.LogData[0].timestamp && !isEmpty(response.timestamp))
-                                this.LogData.unshift(response);
-                        } else {
-                            this.LogData.unshift(response);
-                        }
-
-                        this.setState({ logsList: this.LogData });
+                    if (!isEmpty(response)) {
+                        this.setState({ logsList: response });
                     }
                     if (!this.Unmounted)
                         this.getData();
@@ -70,6 +104,26 @@ class Dashboard extends Component {
 
     handleClear = () => {
         this.LogData = [];
+
+        let body = (hasura_id) => ({
+            "type": "delete",
+            "args": {
+                "table": "logs",
+                "where": {
+                    "hasura_id": {
+                        "$eq": hasura_id
+                    }
+                }
+            }
+        });
+
+        fetch(Config.url.data, this.getRequestOptions(body))
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error('Network response was not ok.');
+            });
         this.setState({ logsList: this.LogData });
         this.handleClose();
     };
@@ -133,6 +187,13 @@ class Dashboard extends Component {
 
 }
 
+const mapStateToProps = (state) => {
+    const { auth, userAuth } = state;
+    return {
+        authData: userAuth.authData
+    };
+};
+
 const mapDispatchToProps = (dispatch) => {
     return {
         actions: bindActionCreators({
@@ -141,4 +202,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 };
 
-export default connect(() => { return {}; }, mapDispatchToProps)(Dashboard);
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

@@ -25,7 +25,7 @@ export default ({ data }) => {
 
                         <div className="timeStamp">{data.responceTime}</div>
                     </div>
-                    <div className={data.is_error_occured ? "errorData" : ""}>{data.answer}</div>
+                    <div className={data.is_error_occured ? "errorData" : ""}>{data.query_response}</div>
                 </div>
 
                 <div className="speechSection">

@@ -2,6 +2,7 @@
     "url": {
         "login": "https://auth.defect94.hasura-app.io/v1/login",
         "signup": "https://auth.defect94.hasura-app.io/v1/signup",
+        "data": "https://data.defect94.hasura-app.io/v1/query",
         "logout": "https://auth.defect94.hasura-app.io/v1/user/logout"
     }
 }
